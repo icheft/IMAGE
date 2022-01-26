@@ -39,7 +39,9 @@
 1. 首先，你應該在自己的電腦上面跑一遍同學的 `app.py`，並且將分數記錄下來。
 2. 評分標準可以參考此 [demo](https://share.streamlit.io/icheft/image2021-stock-analysis-tutorial/main?p=metrics)，上面有動態紀錄了評分的依據。
 3. 評分完之後，請在 GitHub 以你/妳的帳號為名的 branch 中裡的 `apps/` 資料夾中上傳同學的 `app.py` 檔案。**上傳前有幾個步驟需要請你幫忙：**
-    + 將同學的 `app.py` 改成 `他的 id.py`（中間不要用空格）
+    + 將同學的 `app.py` 改成 `<他的 id>.py`（中間不要用空格；e.g. 我的 `app.py` 應該要被改成 `icheft.py`）。原因有二：
+        + 證明助教有改過，並且可以正常執行
+        + 在雲端時可以直接用檔名 access 大家的 app
     + 把檔案中散亂各處的 code 包成一個 `app()` function（如果沒有包的話）
     
     ```py
