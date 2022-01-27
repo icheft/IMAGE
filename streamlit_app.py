@@ -5,6 +5,13 @@ from typing import Callable
 
 from os import walk
 
+MAGE_EMOJI_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/twitter/259/mage_1f9d9.png"
+
+st.set_page_config(
+    page_title="IMAGE CAMP", page_icon=MAGE_EMOJI_URL, initial_sidebar_state="collapsed"
+)
+
+
 apps_path = "./apps"
 filenames = list(
     map(lambda x: x.split(".py")[0], next(walk(apps_path), (None, None, []))[2])
@@ -27,13 +34,6 @@ for i in filenames:
     CONTENT["Demo"][i] = getattr(apps, i).app
 
 # LONG_TO_SHORT = {"課程大綱與說明": "doc", "評分標準": "metrics", "成果展示": "demo"}
-
-MAGE_EMOJI_URL = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/twitter/259/mage_1f9d9.png"
-
-# Set page title and favicon
-st.set_page_config(
-    page_title="IMAGE CAMP", page_icon=MAGE_EMOJI_URL, initial_sidebar_state="collapsed"
-)
 
 
 def main():
