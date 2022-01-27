@@ -85,43 +85,53 @@ def stock_price():
 
     st.write(stock_info)
 
+
 def stock_range():
     row0_spacer1, row0_1, row0_spacer2, row0_2, row0_spacer3 = st.columns(
-        (.1, 2, .2, 1, .1))
+        (0.1, 2, 0.2, 1, 0.1)
+    )
 
-    row0_1.title('定期定額股票查詢系統')
+    row0_1.title("定期定額股票查詢系統")
 
     with row0_2:
-        st.write('')
+        st.write("")
 
     row0_2.subheader(
-        'A Simple Stock Analysis App by [Brian L. Chen](https://icheft.github.io) (CHINESE VER.)')
+        "A Simple Stock Analysis App by [Brian L. Chen](https://icheft.github.io) (CHINESE VER.)"
+    )
 
-    row1_spacer1, row1_1, row1_spacer2 = st.columns((.1, 3.2, .1))
+    row1_spacer1, row1_1, row1_spacer2 = st.columns((0.1, 3.2, 0.1))
 
     with row1_1:
-        st.markdown(
-            "定期定額投資成果查詢。")
-        st.markdown(
-            "**請按照格式要求輸入值。可以輸入不同於預設的投資標的唷！** 👇🏾")
+        st.markdown("定期定額投資成果查詢。")
+        st.markdown("**請按照格式要求輸入值。可以輸入不同於預設的投資標的唷！** 👇🏾")
 
     row2_spacer1, row2_1, row2_spacer2, row2_2, row2_spacer3 = st.columns(
-        (.1, 1.5, 0.1, 1.5, 0.1))
+        (0.1, 1.5, 0.1, 1.5, 0.1)
+    )
 
     with row2_1:
-        stock_id = st.text_input("輸入你的股票代碼*", '0050.TW')
+        stock_id = st.text_input("輸入你的股票代碼*", "0050.TW")
 
-        need_help = st.expander('需要幫忙嗎？ 👉')
+        need_help = st.expander("需要幫忙嗎？ 👉")
         with need_help:
-            st.markdown("""不知道您欲查詢的投資標的？只要搜尋「股票代碼.TW」就可以繼續查詢，如「0050.TW」。完整的台股代碼可以參考[本國上市證券國際證券辨識號碼一覽表](https://isin.twse.com.tw/isin/C_public.jsp?strMode=2)。
-有些上櫃公司的代碼需要加上「.TWO」。如果出現錯誤，請至 [Yahoo! Finance](https://finance.yahoo.com) 搜尋。""")
+            st.markdown(
+                """不知道您欲查詢的投資標的？只要搜尋「股票代碼.TW」就可以繼續查詢，如「0050.TW」。完整的台股代碼可以參考[本國上市證券國際證券辨識號碼一覽表](https://isin.twse.com.tw/isin/C_public.jsp?strMode=2)。
+有些上櫃公司的代碼需要加上「.TWO」。如果出現錯誤，請至 [Yahoo! Finance](https://finance.yahoo.com) 搜尋。"""
+            )
 
     with row2_2:
-        installment = st.number_input(
-            "輸入定期定額金額", value=3000, step=1000, min_value=1000)
+        installment = st.number_input("輸入定期定額金額", value=3000, step=1000, min_value=1000)
 
-    row3_spacer1, row3_1, row3_spacer2, row3_2, row3_spacer3, row3_3, row3_spacer4 = st.columns(
-        (.1, 1, 0.05, 1, 0.05, 1, 0.1))
+    (
+        row3_spacer1,
+        row3_1,
+        row3_spacer2,
+        row3_2,
+        row3_spacer3,
+        row3_3,
+        row3_spacer4,
+    ) = st.columns((0.1, 1, 0.05, 1, 0.05, 1, 0.1))
 
     with row3_1:
         start_date = st.date_input("開始日期", datetime.date(2000, 1, 1))
@@ -130,27 +140,25 @@ def stock_range():
         end_date = st.date_input("結束日期", datetime.date.today())
 
     with row3_3:
-        offset_day = int(st.selectbox('每月扣款日',
-                                      ('6', '16', '26')))  # multichoice to be added
+        offset_day = int(
+            st.selectbox("每月扣款日", ("6", "16", "26"))
+        )  # multichoice to be added
 
-    line1_spacer1, line1_1, line1_spacer2 = st.columns((.1, 3.2, .1))
+    line1_spacer1, line1_1, line1_spacer2 = st.columns((0.1, 3.2, 0.1))
 
 
-
-def main():
+def app():
     st.write("# 成果 - 股票分析")
     st.write("本頁面僅使用台灣地區股票作為例子。")
-    st.write("""### Stockie - 股票查詢小工具
+    st.write(
+        """### Stockie - 股票查詢小工具
             嗨，我是 Jenny。在這個簡單的小工具中，你可以達成以下事項：
             1. 查詢股票目前的股價
             2. 查詢股票的成交量
             3. 查詢股票的資訊
-            4. 查詢股票特定時間區間下來的報酬率""")
+            4. 查詢股票特定時間區間下來的報酬率"""
+    )
 
     stock_price()
     stock_range()
     st.button("重新整理")
-
-
-if __name__ == "__main__":
-    main()

@@ -9,7 +9,8 @@ import matplotlib.pyplot as plt
 
 # 新的套件
 import streamlit as st
-from dateutil.relativedelta import relativedelta # 日期上的運算
+from dateutil.relativedelta import relativedelta  # 日期上的運算
+
 
 def get_price(stock_id="0050.TW"):
     url = f"https://tw.stock.yahoo.com/d/s/dividend_{stock_id.split('.')[0]}.html"
@@ -43,7 +44,8 @@ def get_dividend_yield(stock_id="0050.TW", year=None):
     div_yield = total_div / float(get_price(stock_id))
     return first_year, div_yield, total_div
 
-def app(stock_id='0050.TW'):
+
+def app_realtime(stock_id="0050.TW"):
     st.write("HELLO:)))) Welcome to stock_helper")
     st.write("我是徐皓揚！！")
     st.write("這個網站主要是想要幫助我查到yahoo finance的股市")
@@ -59,21 +61,15 @@ def app(stock_id='0050.TW'):
     stock_id = stock_id
     stock_obj = yf.Ticker(stock_id)
 
-
     st.write(f'分析 {stock_obj.info["longName"]}')
 
     current_price = get_price(stock_id)
     year, div_yield, total_div = get_dividend_yield(stock_id)
 
-    st.write(f'參考時價：{current_price}｜殖利率：{div_yield * 100}%')
+    st.write(f"參考時價：{current_price}｜殖利率：{div_yield * 100}%")
 
 
-def main():
+def app():
 
-
-    app()
+    app_realtime()
     st.button("reset")
-
-
-if __name__ == "__main__":
-    main()

@@ -44,6 +44,3 @@ def app():
     st.markdown(
         f"從 {stock_df['Adj Close'].index[0].strftime('%Y 年 %m 月 %d 日')} 到 {stock_df['Adj Close'].index[-1].strftime('%Y 年 %m 月 %d 日')}，{symbol} 的累積報酬率為 {round(return_rate * 100, 2)}%。"
     )
-
-if __name__ == '__main__':
-    app()

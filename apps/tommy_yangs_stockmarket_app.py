@@ -21,7 +21,7 @@ import requests
 import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
-import pws
+from . import pws
 
 # 在 Jupyter Notebook 中，只要有加上下面這行，就可以直接在裡面畫圖
 # get_ipython().run_line_magic('matplotlib', 'inline')
@@ -117,60 +117,65 @@ from dateutil.relativedelta import relativedelta  # 日期上的運算
 
 # # In[8]:
 
-st.title('**楊予凱 - 股票查詢小工具**')
-st.markdown('**用來 :**')
-st.markdown('1.查詢股票目前的股價')
-st.markdown('2.查詢股票的成交量')
-st.markdown('3.查詢股票的資訊')
-st.markdown('4.查詢股票一年下來的報酬率')
+st.title("**楊予凱 - 股票查詢小工具**")
+st.markdown("**用來 :**")
+st.markdown("1.查詢股票目前的股價")
+st.markdown("2.查詢股票的成交量")
+st.markdown("3.查詢股票的資訊")
+st.markdown("4.查詢股票一年下來的報酬率")
 
 
-def app(stock_id='0050.TW'):
+def app(stock_id="0050.TW"):
     stock_id = stock_id
     stock_obj = yf.Ticker(stock_id)
 
     # 印出我們的標題
 
     st.title(f'**{stock_obj.info["longName"]}**')
-    st.title('(元大台灣卓越50基金)')
+    st.title("(元大台灣卓越50基金)")
     current_price = pws.get_price(stock_id)
     year, div_yield, total_div = pws.get_dividend_yield(stock_id)
 
-    st.write(f'參考時價：{current_price}｜殖利率：{div_yield * 100}%')
+    st.write(f"參考時價：{current_price}｜殖利率：{div_yield * 100}%")
 
     stock_df = stock_obj.history(
-        start='2012-1-27', end='2022-1-26', auto_adjust=False)  # period="max"
+        start="2012-1-27", end="2022-1-26", auto_adjust=False
+    )  # period="max"
 
     ock_df = stock_obj.history(
-        start='2012-1-27', end='2022-1-26', auto_adjust=False)  # period="max"
-    st.write('(資料參考自Yahoo! Finance)')
-    
-    
-    
-    
-    st.write('**股票市場回測線(1/27/2012 ~ 1/26/2022)：**')
-    st.line_chart(stock_df['Adj Close'])
-#     plt.show()
+        start="2012-1-27", end="2022-1-26", auto_adjust=False
+    )  # period="max"
+    st.write("(資料參考自Yahoo! Finance)")
 
-    stock_monthly_returns = stock_df['Adj Close'].resample(
-        'M').ffill().pct_change() * 100
-    stock_yearly_returns = stock_df['Adj Close'].resample(
-        'Y').ffill().pct_change() * 100
+    st.write("**股票市場回測線(1/27/2012 ~ 1/26/2022)：**")
+    st.line_chart(stock_df["Adj Close"])
+    #     plt.show()
+
+    stock_monthly_returns = (
+        stock_df["Adj Close"].resample("M").ffill().pct_change() * 100
+    )
+    stock_yearly_returns = (
+        stock_df["Adj Close"].resample("Y").ffill().pct_change() * 100
+    )
 
     stock_yearly_returns.index = stock_yearly_returns.index.strftime(
-        '%Y')  # 將 index 的 dateformat 改成‘年’
-    st.write('**年度報酬率(1/27/2012 ~ 1/26/2022)：**')
-#     stock_yearly_returns.dropna().plot(kind='bar')
-#     plt.show()
+        "%Y"
+    )  # 將 index 的 dateformat 改成‘年’
+    st.write("**年度報酬率(1/27/2012 ~ 1/26/2022)：**")
+    #     stock_yearly_returns.dropna().plot(kind='bar')
+    #     plt.show()
     st.bar_chart(stock_yearly_returns.dropna())
 
-    stock_daily_return = stock_df['Adj Close'].ffill().pct_change()
+    stock_daily_return = stock_df["Adj Close"].ffill().pct_change()
 
     start = stock_daily_return.index[0]
     end = stock_daily_return.index[-1]  # 以 stock 的最後一天為結束日期.
 
-    year_difference = relativedelta(end, start).years + (relativedelta(
-        end, start).months)/12 + (relativedelta(end, start).days)/365.2425
+    year_difference = (
+        relativedelta(end, start).years
+        + (relativedelta(end, start).months) / 12
+        + (relativedelta(end, start).days) / 365.2425
+    )
 
     # 假設一開始我們有 3000 元
 
@@ -179,36 +184,30 @@ def app(stock_id='0050.TW'):
     total_balance[0] = 0
 
     for i in range(len(stock_daily_return)):
-        balance = balance * (1+total_balance[i])
+        balance = balance * (1 + total_balance[i])
         total_balance[i] = balance
 
-    total_balance.rename('成長變化', inplace=True)
+    total_balance.rename("成長變化", inplace=True)
     st.line_chart(total_balance)
 
-    return_rate = (total_balance[-1] - total_balance[0])/total_balance[0]
+    return_rate = (total_balance[-1] - total_balance[0]) / total_balance[0]
 
-    cgar = (((1+return_rate)**(1/year_difference))-1)
-    
-    
-    st.title('能幫助你的股票分析資訊:')
-    st.write(
-        f'經過 {year_difference} 年後，變成 {total_balance[-1]} 元｜年化報酬率為 {cgar * 100}%')
+    cgar = ((1 + return_rate) ** (1 / year_difference)) - 1
+
+    st.title("能幫助你的股票分析資訊:")
+    st.write(f"經過 {year_difference} 年後，變成 {total_balance[-1]} 元｜年化報酬率為 {cgar * 100}%")
 
     # 股票基本資料
     stock_info = stock_obj.info
-    
-    st.title('**做個筆記吧**')
-    st.write('與這個網頁互動一下')
-    
-    #slider
-    x= st.slider('下次想買多少股?')
-    st.write(x,'股')
-    
-    
+
+    st.title("**做個筆記吧**")
+    st.write("與這個網頁互動一下")
+
+    # slider
+    x = st.slider("下次想買多少股?")
+    st.write(x, "股")
 
 
 # 實際跑一次看看：
 
 # In[9]:
-
-app()

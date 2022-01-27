@@ -18,7 +18,7 @@ Hello~我是**Mina** 現在是高二生。這是這次資管營的小作業，�
 
     st.write("\n")
 
-    symbol = st.text_input("輸入欲查詢的股票", "APPL")
+    symbol = st.text_input("輸入欲查詢的股票", "AAPL")
 
     stock_obj = yf.Ticker(symbol)
 
@@ -50,5 +50,3 @@ Hello~我是**Mina** 現在是高二生。這是這次資管營的小作業，�
     st.markdown(
         f"從 {stock_df['Adj Close'].index[0].strftime('%Y 年 %m 月 %d 日')} 到 {stock_df['Adj Close'].index[-1].strftime('%Y 年 %m 月 %d 日')}，{symbol} 的累積報酬率為 {round(return_rate * 100, 2)}%。"
     )
-
-app()

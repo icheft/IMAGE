@@ -21,8 +21,7 @@ def app():
         "選擇時間區間", ["5d", "1mo", "3mo", "6mo", "1y", "2y", "5y", "max"], index=4
     )  # 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max
 
-    stock_df = stock_obj.history(
-        period=period, auto_adjust=False)  # period="max"
+    stock_df = stock_obj.history(period=period, auto_adjust=False)  # period="max"
     try:
         st.markdown(f'### 最新成交價格：**{stock_obj.info["regularMarketPrice"]}**')
     except:
@@ -45,6 +44,3 @@ def app():
     st.markdown(
         f"從 {stock_df['Adj Close'].index[0].strftime('%Y 年 %m 月 %d 日')} 到 {stock_df['Adj Close'].index[-1].strftime('%Y 年 %m 月 %d 日')}，{symbol} 的累積報酬率為 {round(return_rate * 100, 2)}%。"
     )
-
-
-app()
