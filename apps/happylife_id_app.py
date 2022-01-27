@@ -15,8 +15,8 @@ import matplotlib.pyplot as plt
 import streamlit as st
 from dateutil.relativedelta import relativedelta # 日期上的運算
 
-st.write (這是我做的小網站)
-st.write(我是羅憶寧)
+st.write ('這是我做的小網站')
+st.write('我是羅憶寧')
 
 def get_price(stock_id="0050.TW"):
     url = f"https://tw.stock.yahoo.com/d/s/dividend_{stock_id.split('.')[0]}.html"
