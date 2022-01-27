@@ -1,6 +1,5 @@
 import streamlit as st
 import io
-import apps
 from typing import Callable
 
 from os import walk
@@ -11,6 +10,7 @@ st.set_page_config(
     page_title="IMAGE CAMP", page_icon=MAGE_EMOJI_URL, initial_sidebar_state="collapsed"
 )
 
+import apps
 
 apps_path = "./apps"
 filenames = list(
